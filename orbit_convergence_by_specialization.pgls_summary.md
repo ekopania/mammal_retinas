@@ -1,7 +1,7 @@
 # Based on BM model, no significant difference between retinal specializations
 ## Orbit convergence by specialization, with size as a covariate, nlme BM
 
-'''
+```
 Generalized least squares fit by REML
   Model: orbit_convergence_merged ~ size + retinal_structure
   Data: pgls_df
@@ -48,12 +48,12 @@ mix - f_ac == 0  -14.900      8.191  -1.819    0.162
 mix - hs == 0     -1.121      8.560  -0.131    0.991
 (Adjusted p values reported -- single-step method)
 
-'''
+```
 
 # Based on Pagel model, species with fovea or area centralis only have significantly higher orbit convergence angle than species with horizontal streak only or other types of retinal specializations
 ## Orbit convergence by specialization, with size as a covariate, nlme pagel model
 
-'''
+```
 Generalized least squares fit by REML
   Model: orbit_convergence_merged ~ size + retinal_structure
   Data: pgls_df
@@ -102,11 +102,11 @@ mix - hs == 0     -1.455      6.663  -0.218   0.9740
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 (Adjusted p values reported -- single-step method)
-'''
+```
 
 # Pagel's lambda models are significantly more likely than Brownian motion models
 ## Adding size as a covariate significantly improves models
-'''
+```
 [1] "BM vs Pagel:"
 Likelihood ratio = 7.4297(df=1) P = 0.006416
 [1] "BM vs BM with size as covariate:"
@@ -115,11 +115,11 @@ Likelihood ratio = 4.956(df=1) P = 0.026
 Likelihood ratio = 5.3462(df=1) P = 0.02077
 [1] "BM vs Pagel, both with size as covariate:"
 Likelihood ratio = 7.8199(df=1) P = 0.005167
-'''
+```
 
 # Based on a simulation phylogenetic ANOVA (Ives and Garland 1993), species with fovea or area centralis only have significantly higher orbit convergence angle than species with horizontal streak only or other types of retinal specializations
 
-'''
+```
 ANOVA table: Phylogenetic ANOVA
 
 Response: y
@@ -144,4 +144,4 @@ f_ac 1.0000 0.0048 0.0584
 hs   0.0048 1.0000 0.5986
 mix  0.0584 0.5986 1.0000
 ---------
-'''
+```

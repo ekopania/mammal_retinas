@@ -1,5 +1,6 @@
-# "Predator hypothesis, nlme BM:"
-## Based on Brownian motion model, orbit convergence is not associated with predation
+# Based on both Brownian motion and Pagel's lambda models, orbit convergence is not associated with predation
+## Predator hypothesis, nlme BM
+```
 Generalized least squares fit by REML
   Model: oc ~ pred
   Data: noctPred_df
@@ -26,11 +27,9 @@ Standardized residuals:
 
 Residual standard error: 24.91479
 Degrees of freedom: 91 total; 89 residual
-
-################################################################################################
-# "Predator hypothesis, nlme Pagel:"
-## Based on Pagel model, orbit convergence is not associated with predation
-
+```
+## Predator hypothesis, nlme Pagel:
+```
 Generalized least squares fit by REML
   Model: oc ~ pred
   Data: noctPred_df
@@ -58,11 +57,11 @@ Standardized residuals:
 
 Residual standard error: 15.49655
 Degrees of freedom: 91 total; 89 residual
+```
 
-
-####################################################################################################
 # Add size as covariate - still no significant association with predation with either phylogenetic model
 ## "Predator hypothesis, with size as covariate, nlme BM:"
+```
 Generalized least squares fit by REML
   Model: oc ~ size + pred
   Data: noctPred_df
@@ -121,10 +120,11 @@ Standardized residuals:
 
 Residual standard error: 15.4816
 Degrees of freedom: 91 total; 88 residual
+```
 
-###########################################################################################
 # Orbit convergence is not associated with activity pattern, regardless of phylogenetic model and regardless of whether or not size is considered as a covariate
-## "Nocturnal hypothesis, nlme BM:"
+## Nocturnal hypothesis, nlme BM
+```
 Generalized least squares fit by REML
   Model: oc ~ activity
   Data: noctPred_df
@@ -167,8 +167,10 @@ light - dark == 0    1.096      2.787   0.393    0.917
 mix - dark == 0     -0.454      2.220  -0.205    0.977
 mix - light == 0    -1.550      2.400  -0.646    0.793
 (Adjusted p values reported -- single-step method)
+```
 
 ## "Nocturnal hypothesis, nlme Pagel:"
+```
 Generalized least squares fit by REML
   Model: oc ~ activity
   Data: noctPred_df
@@ -212,8 +214,10 @@ light - dark == 0   0.4744     2.8026   0.169    0.984
 mix - dark == 0    -2.6659     2.8468  -0.936    0.617
 mix - light == 0   -3.1403     2.7979  -1.122    0.500
 (Adjusted p values reported -- single-step method)
+```
 
 ## "Nocturnal hypothesis, with size as covariate, nlme BM:"
+```
 Generalized least squares fit by REML
   Model: oc ~ size + activity
   Data: noctPred_df
@@ -257,8 +261,10 @@ Linear Hypotheses:
 light - dark == 0   0.5937     2.7688   0.214    0.975
 mix - dark == 0    -0.7466     2.1999  -0.339    0.938
 mix - light == 0   -1.3403     2.3749  -0.564    0.837
+```
 
-## "Nocturnal hypothesis, with size as covariate, nlme Pagel:"
+## Nocturnal hypothesis, with size as covariate, nlme Pagel:
+```
 Generalized least squares fit by REML
   Model: oc ~ size + activity
   Data: noctPred_df
@@ -304,10 +310,12 @@ light - dark == 0  -0.2155     2.7982  -0.077    0.997
 mix - dark == 0    -2.9860     2.8163  -1.060    0.539
 mix - light == 0   -2.7704     2.7626  -1.003    0.575
 (Adjusted p values reported -- single-step method)
+```
 
-#################################################################################################
 # No support for the nocturnal predation hypothesis (no significant interaction between activity pattern and predation)
-## "Nocturnal predation hypothesis, nlme BM:"
+## Nocturnal predation hypothesis, nlme BM
+
+```
 Generalized least squares fit by REML
   Model: oc ~ pred + activity + pred:activity
   Data: noctPred_df
@@ -342,8 +350,10 @@ Standardized residuals:
 
 Residual standard error: 25.42308
 Degrees of freedom: 91 total; 85 residual
+```
 
-## "Nocturnal predation hypothesis, nlme Pagel:"
+## Nocturnal predation hypothesis, nlme Pagel
+```
 Generalized least squares fit by REML
   Model: oc ~ pred + activity + pred:activity
   Data: noctPred_df
@@ -379,8 +389,10 @@ Standardized residuals:
 
 Residual standard error: 15.41619
 Degrees of freedom: 91 total; 85 residual
+```
 
-## "Nocturnal predation hypothesis, with size as covariate, nlme BM:"
+## Nocturnal predation hypothesis, with size as covariate, nlme BM
+```
 Generalized least squares fit by REML
   Model: oc ~ size + pred + activity + pred:activity
   Data: noctPred_df
@@ -417,8 +429,10 @@ Standardized residuals:
 
 Residual standard error: 25.08138
 Degrees of freedom: 91 total; 84 residual
+```
 
-## "Nocturnal predation hypothesis, with size as covariate, nlme Pagel:"
+## Nocturnal predation hypothesis, with size as covariate, nlme Pagel
+```
 Generalized least squares fit by REML
   Model: oc ~ size + pred + activity + pred:activity
   Data: noctPred_df
@@ -455,3 +469,4 @@ Standardized residuals:
 
 Residual standard error: 15.48893
 Degrees of freedom: 91 total; 84 residual
+```
