@@ -473,3 +473,41 @@ Standardized residuals:
 Residual standard error: 15.48893
 Degrees of freedom: 91 total; 84 residual
 ```
+
+# Pagel's lambda models have significantly higher likelihood
+```
+[1] "res_pred_BM vs res_pred_P"
+Likelihood ratio = 19.451(df=1) P = 1.032e-05
+[1] "res_predSize_BM vs res_predSize_P"
+Likelihood ratio = 18.788(df=1) P = 1.461e-05
+[1] "res_act_BM vs res_act_P"
+Likelihood ratio = 21.463(df=1) P = 3.606e-06
+[1] "res_actSize_BM vs res_actSize_P"
+Likelihood ratio = 20.899(df=1) P = 4.842e-06
+[1] "res_predAct_BM vs res_predAct_P"
+Likelihood ratio = 21.569(df=1) P = 3.413e-06
+[1] "res_predActSize_BM vs res_predActSize_P"
+Likelihood ratio = 20.497(df=1) P = 5.974e-06
+```
+
+# Considering size as a covariate does not significantly improve models; considering both activity pattern and predation improves models compared to considerinig just one or the other
+```
+[1] "Size only vs predation w/ size as covariate:"
+Likelihood ratio = 4.5982(df=1) P = 0.03201
+[1] "Predation only vs predation w/ size as covariate:"
+Likelihood ratio = 3.8094(df=1) P = 0.05097
+[1] "Size only vs activity pattern w/ size as covariate:"
+Likelihood ratio = 8.9106(df=2) P = 0.01162
+[1] "Activity patterns only vs activity pattern w/ size as covariate:"
+Likelihood ratio = 3.7343(df=1) P = 0.05331
+[1] "Predation only vs predation and activity pattern:"
+Likelihood ratio = 19.712(df=4) P = 0.0005693
+[1] "Activity only vs predation and activity pattern:"
+Likelihood ratio = 15.324(df=3) P = 0.00156
+[1] "Predation w/ size as covariate vs predation and activity pattern w/ size as covariate:"
+Likelihood ratio = 19.408(df=4) P = 0.0006534
+[1] "Activity w/ size as covariate vs predation and activity pattern w/ size as covariate:"
+Likelihood ratio = 15.095(df=3) P = 0.001737
+```
+
+# Conclusion: Orbit convergence is not associated with predation or activity pattern; no support for the nocturnal predation hypothesis
