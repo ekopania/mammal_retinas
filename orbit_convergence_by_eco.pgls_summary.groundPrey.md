@@ -126,12 +126,140 @@ Residual standard error: 15.23699
 Degrees of freedom: 87 total; 84 residual
 ```
 
-# Pagel's lambda models significantly more likely; therefore concluding that orbit convergence is NOT significantly associated with arboreality after phylogenetic correction
+# Orbit convergence is not associated with herbivory, regardless of phylogenetic model or including size as a covariate
+## Herbivore hypothesis, no interaction, nlme BM
 ```
-[1] "res_arb_BM vs res_arb_P"
+Generalized least squares fit by REML
+  Model: oc ~ herb
+  Data: smallHerb_df
+       AIC      BIC    logLik
+  663.6296 670.9576 -328.8148
+
+Correlation Structure: corBrownian
+ Formula: ~spp
+ Parameter estimate(s):
+numeric(0)
+
+Coefficients:
+               Value Std.Error  t-value p-value
+(Intercept) 38.43170  8.881389 4.327217  0.0000
+herbyes      1.82921  2.242346 0.815757  0.4169
+
+ Correlation:
+        (Intr)
+herbyes -0.189
+
+Standardized residuals:
+       Min         Q1        Med         Q3        Max
+-0.8575425 -0.2362471  0.3753505  0.9455014  2.8543577
+
+Residual standard error: 23.62671
+Degrees of freedom: 87 total; 85 residual
+```
+## Herbivore hypothesis, no interaction, nlme Pagel
+```
+Generalized least squares fit by REML
+  Model: oc ~ herb
+  Data: smallHerb_df
+       AIC     BIC    logLik
+  644.1744 653.945 -318.0872
+
+Correlation Structure: corPagel
+ Formula: ~spp
+ Parameter estimate(s):
+   lambda
+0.8629194
+
+Coefficients:
+               Value Std.Error  t-value p-value
+(Intercept) 38.80216  5.677230 6.834699   0.000
+herbyes      1.95706  2.862428 0.683707   0.496
+
+ Correlation:
+        (Intr)
+herbyes -0.37
+
+Standardized residuals:
+       Min         Q1        Med         Q3        Max
+-1.3775324 -0.4034579  0.5638964  1.4493020  4.4420304
+
+Residual standard error: 15.06986
+Degrees of freedom: 87 total; 85 residual
+```
+## Herbivore hypothesis, with size as covariate, no interaction, nlme BM
+```
+Generalized least squares fit by REML
+  Model: oc ~ size + herb
+  Data: smallHerb_df
+       AIC      BIC    logLik
+  659.9154 669.6387 -325.9577
+
+Correlation Structure: corBrownian
+ Formula: ~spp
+ Parameter estimate(s):
+numeric(0)
+
+Coefficients:
+                Value Std.Error   t-value p-value
+(Intercept) 27.807872  9.992280 2.7829355  0.0067
+size         1.516112  0.702359 2.1585994  0.0337
+herbyes      1.642398  2.197285 0.7474667  0.4569
+
+ Correlation:
+        (Intr) size
+size    -0.493
+herbyes -0.145 -0.039
+
+Standardized residuals:
+       Min         Q1        Med         Q3        Max
+-1.0328693 -0.2385932  0.3093326  0.8990777  2.6099391
+
+Residual standard error: 23.13396
+Degrees of freedom: 87 total; 84 residual
+```
+## Herbivore hypothesis, with size as covariate, no interaction, nlme Pagel
+```
+Generalized least squares fit by REML
+  Model: oc ~ size + herb
+  Data: smallHerb_df
+       AIC      BIC    logLik
+  641.0794 653.2335 -315.5397
+
+Correlation Structure: corPagel
+ Formula: ~spp
+ Parameter estimate(s):
+   lambda
+0.8732001
+
+Coefficients:
+                Value Std.Error  t-value p-value
+(Intercept) 30.148519  6.986681 4.315142  0.0000
+size         1.250935  0.597270 2.094422  0.0392
+herbyes      1.275745  2.820292 0.452345  0.6522
+
+ Correlation:
+        (Intr) size
+size    -0.587
+herbyes -0.222 -0.120
+
+Standardized residuals:
+       Min         Q1        Med         Q3        Max
+-1.5285675 -0.3922609  0.5049456  1.3540196  4.1054803
+
+Residual standard error: 14.9873
+Degrees of freedom: 87 total; 84 residual
+```
+
+# Pagel's lambda models significantly more likely; therefore concluding that orbit convergence is NOT significantly associated with arboreality or herbivory after phylogenetic correction
+```
+Arboreal BM vs arboreal Pagel
 Likelihood ratio = 16.322(df=1) P = 5.345e-05
-[1] "res_arbSize_BM vs res_arbSize_P"
+Arboreal BM vs arboreal Pagel; both with size as covariate
 Likelihood ratio = 16.945(df=1) P = 3.848e-05
+Herbivor BM vs herbivore Pagel
+Likelihood ratio = 21.455(df=1) P = 3.622e-06
+Herbivor BM vs herbivore Pagel; both with size as covariate
+Likelihood ratio = 20.836(df=1) P = 5.003e-06
 ```
 
 # No support for the hypothesis that small prey species have lower orbit convergence
