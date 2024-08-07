@@ -5,7 +5,7 @@ Generalized least squares fit by REML
   Model: oc ~ forstrat
   Data: smallHerb_df
        AIC      BIC    logLik
-  657.9593 665.2873 -325.9797
+  634.1062 641.3263 -314.0531
 
 Correlation Structure: corBrownian
  Formula: ~spp
@@ -14,51 +14,52 @@ numeric(0)
 
 Coefficients:
                Value Std.Error  t-value p-value
-(Intercept) 35.38843  8.655672 4.088468  0.0001
-forstratG    7.09775  2.909419 2.439577  0.0168
+(Intercept) 34.80910  8.350056 4.168727  0.0001
+forstratG    7.58499  2.862579 2.649704  0.0097
 
  Correlation:
           (Intr)
-forstratG -0.209
+forstratG -0.212
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--0.9806513 -0.3213941  0.3582150  1.0633113  2.8440580
+-1.0132083 -0.3365209  0.2753539  1.0881700  2.9547309
 
-Residual standard error: 22.92985
-Degrees of freedom: 87 total; 85 residual
+Residual standard error: 22.10215
+Degrees of freedom: 84 total; 82 residual
 ```
 
 # Based on Pagel's lambda model, orbit convergence is not associated with arboreal foraging
 ## Arboreal hypothesis, nlme Pagel
 ```
+
 Generalized least squares fit by REML
   Model: oc ~ forstrat
   Data: smallHerb_df
        AIC      BIC    logLik
-  643.6376 653.4082 -317.8188
+  622.5854 632.2123 -307.2927
 
 Correlation Structure: corPagel
  Formula: ~spp
  Parameter estimate(s):
    lambda
-0.8865929
+0.8820653
 
 Coefficients:
                Value Std.Error  t-value p-value
-(Intercept) 38.20333  5.801592 6.584974  0.0000
-forstratG    3.17336  3.053842 1.039136  0.3017
+(Intercept) 38.33962  5.749715 6.668090  0.0000
+forstratG    2.76048  3.133622 0.880924  0.3809
 
  Correlation:
           (Intr)
-forstratG -0.322
+forstratG -0.334
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--1.3756018 -0.4240709  0.4566744  1.4734132  4.2679417
+-1.3733714 -0.4522659  0.4543259  1.3857327  4.3348791
 
-Residual standard error: 15.53988
-Degrees of freedom: 87 total; 85 residual
+Residual standard error: 15.36373
+Degrees of freedom: 84 total; 82 residual
 ```
 
 # Similar results with size as a covariate
@@ -68,7 +69,7 @@ Generalized least squares fit by REML
   Model: oc ~ size + forstrat
   Data: smallHerb_df
        AIC      BIC    logLik
-  655.7766 665.4999 -323.8883
+  630.1358 639.7136 -311.0679
 
 Correlation Structure: corBrownian
  Formula: ~spp
@@ -77,53 +78,54 @@ numeric(0)
 
 Coefficients:
                 Value Std.Error  t-value p-value
-(Intercept) 27.313407  9.713326 2.811952  0.0061
-size         1.232914  0.703210 1.753266  0.0832
-forstratG    6.006656  2.941154 2.042279  0.0443
+(Intercept) 26.851077  9.328837 2.878288  0.0051
+size         2.800490  1.542153 1.815962  0.0731
+forstratG    6.470129  2.889273 2.239362  0.0279
 
  Correlation:
           (Intr) size
-size      -0.474
-forstratG -0.079 -0.212
+size      -0.470
+forstratG -0.083 -0.212
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--1.0862847 -0.3268589  0.2323659  1.0298636  2.6416402
+-1.1207301 -0.3506936  0.2197343  1.0446246  2.7543714
 
-Residual standard error: 22.65513
-Degrees of freedom: 87 total; 84 residual
+Residual standard error: 21.79885
+Degrees of freedom: 84 total; 81 residual
 ```
+
 ## Arboreal hypothesis, with size as covariate, nlme Pagel
 ```
 Generalized least squares fit by REML
   Model: oc ~ size + forstrat
   Data: smallHerb_df
-       AIC      BIC    logLik
-  640.8318 652.9859 -315.4159
+       AIC     BIC    logLik
+  617.6568 629.629 -303.8284
 
 Correlation Structure: corPagel
  Formula: ~spp
  Parameter estimate(s):
    lambda
-0.8850395
+0.8796577
 
 Coefficients:
                 Value Std.Error  t-value p-value
-(Intercept) 30.177368  6.966262 4.331932  0.0000
-size         1.221200  0.609856 2.002439  0.0485
-forstratG    1.787102  3.077679 0.580665  0.5630
+(Intercept) 29.960189  6.869210 4.361519  0.0000
+size         2.937445  1.381793 2.125821  0.0366
+forstratG    1.278116  3.143115 0.406640  0.6853
 
  Correlation:
           (Intr) size
-size      -0.578
-forstratG -0.131 -0.219
+size      -0.577
+forstratG -0.145 -0.212
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--1.5178581 -0.3920441  0.3977456  1.3851717  4.0257545
+-1.5333318 -0.3963309  0.3337985  1.3537340  4.0964780
 
-Residual standard error: 15.23699
-Degrees of freedom: 87 total; 84 residual
+Residual standard error: 14.99432
+Degrees of freedom: 84 total; 81 residual
 ```
 
 # Orbit convergence is not associated with herbivory, regardless of phylogenetic model or including size as a covariate
@@ -133,7 +135,7 @@ Generalized least squares fit by REML
   Model: oc ~ herb
   Data: smallHerb_df
        AIC      BIC    logLik
-  663.6296 670.9576 -328.8148
+  640.4299 647.6501 -317.2149
 
 Correlation Structure: corBrownian
  Formula: ~spp
@@ -142,57 +144,59 @@ numeric(0)
 
 Coefficients:
                Value Std.Error  t-value p-value
-(Intercept) 38.43170  8.881389 4.327217  0.0000
-herbyes      1.82921  2.242346 0.815757  0.4169
+(Intercept) 38.55141  8.838917 4.361553   0.000
+herbyes      1.32618  3.393877 0.390756   0.697
 
  Correlation:
         (Intr)
-herbyes -0.189
+herbyes -0.277
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--0.8575425 -0.2362471  0.3753505  0.9455014  2.8543577
+-0.8639605 -0.2503023  0.3568618  0.9093730  2.9478373
 
-Residual standard error: 23.62671
-Degrees of freedom: 87 total; 85 residual
+Residual standard error: 23.00752
+Degrees of freedom: 84 total; 82 residual
 ```
+
 ## Herbivore hypothesis, no interaction, nlme Pagel
 ```
 Generalized least squares fit by REML
   Model: oc ~ herb
   Data: smallHerb_df
-       AIC     BIC    logLik
-  644.1744 653.945 -318.0872
+       AIC      BIC    logLik
+  622.4043 632.0312 -307.2022
 
 Correlation Structure: corPagel
  Formula: ~spp
  Parameter estimate(s):
    lambda
-0.8629194
+0.8623888
 
 Coefficients:
                Value Std.Error  t-value p-value
-(Intercept) 38.80216  5.677230 6.834699   0.000
-herbyes      1.95706  2.862428 0.683707   0.496
+(Intercept) 38.04584  5.699914 6.674810  0.0000
+herbyes      2.82504  3.091456 0.913821  0.3635
 
  Correlation:
         (Intr)
-herbyes -0.37
+herbyes -0.398
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--1.3775324 -0.4034579  0.5638964  1.4493020  4.4420304
+-1.3962999 -0.4078229  0.5199369  1.3962666  4.4709903
 
-Residual standard error: 15.06986
-Degrees of freedom: 87 total; 85 residual
+Residual standard error: 14.94727
+Degrees of freedom: 84 total; 82 residual
 ```
+
 ## Herbivore hypothesis, with size as covariate, no interaction, nlme BM
 ```
 Generalized least squares fit by REML
   Model: oc ~ size + herb
   Data: smallHerb_df
        AIC      BIC    logLik
-  659.9154 669.6387 -325.9577
+  634.5868 644.1646 -313.2934
 
 Correlation Structure: corBrownian
  Formula: ~spp
@@ -201,65 +205,66 @@ numeric(0)
 
 Coefficients:
                 Value Std.Error   t-value p-value
-(Intercept) 27.807872  9.992280 2.7829355  0.0067
-size         1.516112  0.702359 2.1585994  0.0337
-herbyes      1.642398  2.197285 0.7474667  0.4569
+(Intercept) 27.480175  9.885143 2.7799472  0.0068
+size         3.548595  1.551296 2.2875040  0.0248
+herbyes      1.482166  3.310239 0.4477519  0.6555
 
  Correlation:
         (Intr) size
-size    -0.493
-herbyes -0.145 -0.039
+size    -0.490
+herbyes -0.251  0.021
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--1.0328693 -0.2385932  0.3093326  0.8990777  2.6099391
+-1.0571269 -0.2675697  0.2886813  0.8626666  2.6997615
 
-Residual standard error: 23.13396
-Degrees of freedom: 87 total; 84 residual
+Residual standard error: 22.43576
+Degrees of freedom: 84 total; 81 residual
 ```
+
 ## Herbivore hypothesis, with size as covariate, no interaction, nlme Pagel
 ```
 Generalized least squares fit by REML
   Model: oc ~ size + herb
   Data: smallHerb_df
        AIC      BIC    logLik
-  641.0794 653.2335 -315.5397
+  617.3529 629.3251 -303.6764
 
 Correlation Structure: corPagel
  Formula: ~spp
  Parameter estimate(s):
    lambda
-0.8732001
+0.8728437
 
 Coefficients:
                 Value Std.Error  t-value p-value
-(Intercept) 30.148519  6.986681 4.315142  0.0000
-size         1.250935  0.597270 2.094422  0.0392
-herbyes      1.275745  2.820292 0.452345  0.6522
+(Intercept) 29.170649  6.963565 4.189039  0.0001
+size         2.940278  1.351968 2.174814  0.0326
+herbyes      2.161749  3.039665 0.711180  0.4790
 
  Correlation:
         (Intr) size
-size    -0.587
-herbyes -0.222 -0.120
+size    -0.582
+herbyes -0.257 -0.102
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--1.5285675 -0.3922609  0.5049456  1.3540196  4.1054803
+-1.5583770 -0.4172078  0.4429393  1.2910007  4.1367038
 
-Residual standard error: 14.9873
-Degrees of freedom: 87 total; 84 residual
+Residual standard error: 14.82226
+Degrees of freedom: 84 total; 81 residual
 ```
 
 # Pagel's lambda models significantly more likely; therefore concluding that orbit convergence is NOT significantly associated with arboreality or herbivory after phylogenetic correction
 ```
 Arboreal BM vs arboreal Pagel
-Likelihood ratio = 16.322(df=1) P = 5.345e-05
+Likelihood ratio = 13.521(df=1) P = 0.0002359
 Arboreal BM vs arboreal Pagel; both with size as covariate
-Likelihood ratio = 16.945(df=1) P = 3.848e-05
-Herbivor BM vs herbivore Pagel
-Likelihood ratio = 21.455(df=1) P = 3.622e-06
-Herbivor BM vs herbivore Pagel; both with size as covariate
-Likelihood ratio = 20.836(df=1) P = 5.003e-06
+Likelihood ratio = 14.479(df=1) P = 0.0001417
+Herbivore BM vs herbivore Pagel
+Likelihood ratio = 20.026(df=1) P = 7.641e-06
+Herbivore BM vs herbivore Pagel; both with size as covariate
+Likelihood ratio = 19.234(df=1) P = 1.156e-05
 ```
 
 # No support for the hypothesis that small prey species have lower orbit convergence
@@ -269,7 +274,7 @@ Generalized least squares fit by REML
   Model: oc ~ size + forstrat + herb
   Data: smallHerb_df
        AIC      BIC    logLik
-  653.4543 665.5485 -321.7272
+  626.7982 638.7083 -308.3991
 
 Correlation Structure: corBrownian
  Formula: ~spp
@@ -277,24 +282,24 @@ Correlation Structure: corBrownian
 numeric(0)
 
 Coefficients:
-                Value Std.Error   t-value p-value
-(Intercept) 25.859404  9.831624 2.6302272  0.0102
-size         1.192104  0.704712 1.6916183  0.0945
-forstratG    6.291048  2.956750 2.1276906  0.0363
-herbyes      2.098706  2.163215 0.9701791  0.3348
+                Value Std.Error  t-value p-value
+(Intercept) 24.029882  9.702895 2.476568  0.0154
+size         2.746163  1.542060 1.780841  0.0787
+forstratG    7.245524  2.980513 2.430966  0.0173
+herbyes      3.481698  3.317833 1.049389  0.2972
 
  Correlation:
           (Intr) size   frstrG
-size      -0.459
-forstratG -0.093 -0.216
-herbyes   -0.152 -0.060  0.099
+size      -0.442
+forstratG -0.146 -0.214
+herbyes   -0.277 -0.034  0.248
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--1.1074175 -0.3498513  0.2732625  1.0441508  2.6209465
+-1.1756233 -0.3889281  0.2857650  1.0909092  2.7029468
 
-Residual standard error: 22.66306
-Degrees of freedom: 87 total; 83 residual
+Residual standard error: 21.78524
+Degrees of freedom: 84 total; 80 residual
 ```
 
 ## Small herbivore (prey) hypothesis, no interaction, nlme Pagel
@@ -302,34 +307,34 @@ Degrees of freedom: 87 total; 83 residual
 Generalized least squares fit by REML
   Model: oc ~ size + forstrat + herb
   Data: smallHerb_df
-       AIC      BIC    logLik
-  638.6024 653.1155 -313.3012
+       AIC     BIC    logLik
+  614.9008 629.193 -301.4504
 
 Correlation Structure: corPagel
  Formula: ~spp
  Parameter estimate(s):
    lambda
-0.8889022
+0.8868948
 
 Coefficients:
                 Value Std.Error  t-value p-value
-(Intercept) 29.148844  7.229823 4.031751  0.0001
-size         1.173615  0.619104 1.895668  0.0615
-forstratG    2.114704  3.110011 0.679967  0.4984
-herbyes      1.587781  2.837496 0.559571  0.5773
+(Intercept) 28.146879  7.229824 3.893163  0.0002
+size         2.785118  1.399332 1.990320  0.0500
+forstratG    1.952335  3.190414 0.611938  0.5423
+herbyes      2.541878  3.099167 0.820181  0.4146
 
  Correlation:
           (Intr) size   frstrG
-size      -0.521
-forstratG -0.156 -0.232
-herbyes   -0.235 -0.139  0.128
+size      -0.508
+forstratG -0.186 -0.230
+herbyes   -0.280 -0.133  0.178
 
 Standardized residuals:
-      Min        Q1       Med        Q3       Max
--1.527114 -0.416213  0.469917  1.408910  3.965006
+       Min         Q1        Med         Q3        Max
+-1.5598397 -0.4253012  0.4103154  1.3447269  4.0053465
 
-Residual standard error: 15.38823
-Degrees of freedom: 87 total; 83 residual
+Residual standard error: 15.17995
+Degrees of freedom: 84 total; 80 residual
 ```
 
 ## Small herbivore (prey) hypothesis, with forstrat:herb interaction, nlme BM
@@ -337,8 +342,8 @@ Degrees of freedom: 87 total; 83 residual
 Generalized least squares fit by REML
   Model: oc ~ size + forstrat + herb + forstrat:herb
   Data: smallHerb_df
-       AIC      BIC  logLik
-  648.9201 663.3604 -318.46
+       AIC     BIC    logLik
+  621.8853 636.102 -304.9427
 
 Correlation Structure: corBrownian
  Formula: ~spp
@@ -346,26 +351,26 @@ Correlation Structure: corBrownian
 numeric(0)
 
 Coefficients:
-                      Value Std.Error   t-value p-value
-(Intercept)       26.618535  9.805879 2.7145486  0.0081
-size               1.236297  0.702452 1.7599749  0.0821
-forstratG          2.365918  4.193771 0.5641504  0.5742
-herbyes            0.724460  2.394252 0.3025830  0.7630
-forstratG:herbyes  5.809314  4.420625 1.3141386  0.1925
+                      Value Std.Error    t-value p-value
+(Intercept)       27.669117 10.107640  2.7374459  0.0076
+size               2.877649  1.540616  1.8678558  0.0655
+forstratG          1.394299  5.582315  0.2497708  0.8034
+herbyes           -1.258524  5.059187 -0.2487601  0.8042
+forstratG:herbyes  7.282974  5.882740  1.2380241  0.2194
 
  Correlation:
                   (Intr) size   frstrG herbys
-size              -0.455
-forstratG         -0.107 -0.186
-herbyes           -0.163 -0.075  0.374
-forstratG:herbyes  0.059  0.048 -0.712 -0.437
+size              -0.402
+forstratG         -0.321 -0.172
+herbyes           -0.393 -0.074  0.727
+forstratG:herbyes  0.291  0.069 -0.847 -0.757
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--1.1896894 -0.3514053  0.3937061  1.0724395  2.5530708
+-1.2232194 -0.4208696  0.3649956  1.1049428  2.6656970
 
-Residual standard error: 22.56445
-Degrees of freedom: 87 total; 82 residual
+Residual standard error: 21.71307
+Degrees of freedom: 84 total; 79 residual
 ```
 
 ## Small herbivore (prey) hypothesis, with forstrat:herb interaction, nlme Pagel
@@ -374,34 +379,35 @@ Generalized least squares fit by REML
   Model: oc ~ size + forstrat + herb + forstrat:herb
   Data: smallHerb_df
        AIC      BIC    logLik
-  634.4219 651.2689 -310.2109
+  610.9212 627.5073 -298.4606
 
 Correlation Structure: corPagel
  Formula: ~spp
  Parameter estimate(s):
    lambda
-0.8998915
+0.8982571
 
 Coefficients:
                       Value Std.Error   t-value p-value
-(Intercept)       30.500263  7.462911  4.086913  0.0001
-size               1.184982  0.620111  1.910919  0.0595
-forstratG         -1.059854  4.403500 -0.240684  0.8104
-herbyes           -0.782783  3.578701 -0.218734  0.8274
-forstratG:herbyes  5.362580  4.815429  1.113625  0.2687
+(Intercept)       29.853009  7.649547  3.902585  0.0002
+size               2.816009  1.403753  2.006058  0.0483
+forstratG         -1.124659  4.867840 -0.231039  0.8179
+herbyes           -0.166508  4.319213 -0.038550  0.9693
+forstratG:herbyes  4.898210  5.247226  0.933486  0.3534
 
  Correlation:
                   (Intr) size   frstrG herbys
-size              -0.504
-forstratG         -0.246 -0.173
-herbyes           -0.301 -0.116  0.510
-forstratG:herbyes  0.197  0.016 -0.713 -0.616
+size              -0.476
+forstratG         -0.331 -0.167
+herbyes           -0.391 -0.108  0.612
+forstratG:herbyes  0.285  0.024 -0.758 -0.696
 
-Standardized residuals:
+tandardized residuals:
        Min         Q1        Med         Q3        Max
--1.5858376 -0.4201713  0.5731727  1.3703349  3.8195779
-Residual standard error: 15.63303
-Degrees of freedom: 87 total; 82 residual
+-1.5945862 -0.4758474  0.4841283  1.3610003  3.8711442
+
+Residual standard error: 15.45379
+Degrees of freedom: 84 total; 79 residual
 ```
 
 ## Small herbivore (prey) hypothesis, with size:herb interaction, nlme BM
@@ -410,7 +416,7 @@ Generalized least squares fit by REML
   Model: oc ~ size + forstrat + herb + size:herb
   Data: smallHerb_df
        AIC      BIC    logLik
-  652.2613 666.7016 -320.1307
+  624.6037 638.8204 -306.3019
 
 Correlation Structure: corBrownian
  Formula: ~spp
@@ -419,25 +425,25 @@ numeric(0)
 
 Coefficients:
                  Value Std.Error    t-value p-value
-(Intercept)  30.751026 10.730912  2.8656488  0.0053
-size          0.613690  0.870613  0.7048938  0.4829
-forstratG     6.205015  2.952898  2.1013310  0.0387
-herbyes      -7.767144  9.009479 -0.8621081  0.3911
-size:herbyes  1.175915  1.042535  1.1279384  0.2626
+(Intercept)  27.626591 10.652308  2.5934841  0.0113
+size          1.787340  1.932400  0.9249329  0.3578
+forstratG     7.130582  2.989681  2.3850646  0.0195
+herbyes      -3.558257  9.146264 -0.3890394  0.6983
+size:herbyes  1.908605  2.310049  0.8262182  0.4112
 
  Correlation:
              (Intr) size   frstrG herbys
-size         -0.577
-forstratG    -0.096 -0.159
-herbyes      -0.426  0.560  0.049
-size:herbyes  0.404 -0.589 -0.026 -0.971
+size         -0.568
+forstratG    -0.152 -0.143
+herbyes      -0.473  0.550  0.133
+size:herbyes  0.409 -0.601 -0.047 -0.932
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--1.1947454 -0.3068635  0.3259240  1.0363944  2.5376029
+-1.2254302 -0.3449113  0.3133760  1.0921795  2.6378387
 
-Residual standard error: 22.62598
-Degrees of freedom: 87 total; 82 residual
+Residual standard error: 21.82858
+Degrees of freedom: 84 total; 79 residual
 ```
 
 ## Small herbivore (prey) hypothesis, with interaction, nlme Pagel
@@ -446,58 +452,61 @@ Generalized least squares fit by REML
   Model: oc ~ size + forstrat + herb + size:herb
   Data: smallHerb_df
        AIC      BIC    logLik
-  638.8304 655.6774 -312.4152
+  613.5112 630.0973 -299.7556
 
 Correlation Structure: corPagel
  Formula: ~spp
  Parameter estimate(s):
-   lambda
-0.8908557
+  lambda
+0.885405
 
 Coefficients:
-                 Value Std.Error  t-value p-value
-(Intercept)  29.932073  8.582745 3.487471  0.0008
-size          1.067322  0.849849 1.255896  0.2127
-forstratG     2.160518  3.125688 0.691214  0.4914
-herbyes       0.193546  8.173669 0.023679  0.9812
-size:herbyes  0.175609  0.954671 0.183947  0.8545
+                 Value Std.Error   t-value p-value
+(Intercept)  27.914895  8.544069  3.267166  0.0016
+size          2.866852  1.944107  1.474637  0.1443
+forstratG     1.908780  3.212919  0.594095  0.5541
+herbyes       2.986302  8.132018  0.367228  0.7144
+size:herbyes -0.132518  2.176049 -0.060898  0.9516
 
  Correlation:
              (Intr) size   frstrG herbys
-size         -0.683
-forstratG    -0.141 -0.157
-herbyes      -0.564  0.602  0.061
-size:herbyes  0.528 -0.680 -0.018 -0.937
+size         -0.676
+forstratG    -0.166 -0.156
+herbyes      -0.578  0.600  0.082
+size:herbyes  0.527 -0.690 -0.015 -0.924
 
 Standardized residuals:
        Min         Q1        Med         Q3        Max
--1.5256321 -0.4066070  0.4684321  1.3933085  3.9140272
-Residual standard error: 15.5243
-Degrees of freedom: 87 total; 82 residual
+-1.5488126 -0.4261405  0.4062445  1.3364783  3.9947575
+
+Residual standard error: 15.24299
+Degrees of freedom: 84 total; 79 residual
 ```
 
 # Pagel's lambda models have significantly higher likelihood
 ```
 [1] "res_preySize_BM vs res_preySize_P"
-Likelihood ratio = 16.852(df=1) P = 4.041e-05
+Likelihood ratio = 13.897(df=1) P = 0.0001931
 [1] "res_forstratHerbIntxn_BM vs res_forstratHerbIntxn_P"
-Likelihood ratio = 16.498(df=1) P = 4.87e-05
+Likelihood ratio = 12.964(df=1) P = 0.0003175
 [1] "res_sizeHerbIntxn_BM vs res_sizeHerbIntxn_P"
-Likelihood ratio = 15.431(df=1) P = 8.557e-05
+Likelihood ratio = 13.093(df=1) P = 0.0002965
 ```
 
 # Adding size as a covariate tends to improve models; adding an interaction between size and herbivory does not significantly improve the model
 ```
 [1] "Size only vs foraging strategy w/ size as covariate:"
-Likelihood ratio = 44.363(df=1) P = 2.728e-11
+Likelihood ratio = 44.458(df=1) P = 2.598e-11
 [1] "Foraging strategy only vs foraging strategy w/ size as covariate:"
-Likelihood ratio = 4.8058(df=1) P = 0.02836
+Likelihood ratio = 6.9287(df=1) P = 0.008482
+[1] "Herbivory only vs herbivory w/ size as covariate:"
+Likelihood ratio = 7.0515(df=1) P = 0.00792
 [1] "Foraging strategy only vs herbivory and foraging strategy w/ size as covariate:"
-Likelihood ratio = 4.2294(df=1) P = 0.03973
+Likelihood ratio = 4.7559(df=1) P = 0.0292
 [1] "herbivory and foraging strategy w/ size as covariate vs interaction between foraging strat and herb:"
-Likelihood ratio = 6.1806(df=1) P = 0.01292
+Likelihood ratio = 5.9797(df=1) P = 0.01447
 [1] "herbivory and foraging strategy w/ size as covariate vs interaction between size and herb:"
-Likelihood ratio = 1.7721(df=1) P = 0.1831
+Likelihood ratio = 3.3896(df=1) P = 0.06561
 ```
 
 # Conclusion: trend towards higher orbit convergence in arboreal species compared to ground foragers, but not significant
