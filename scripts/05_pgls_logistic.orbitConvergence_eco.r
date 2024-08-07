@@ -172,7 +172,7 @@ for(i in 1:nrow(elton.sort)){
 elton.sort$small_herb<-small_herb
 print(elton.sort)
 
-pdf("ecological.vs.orbitConvergence.phylo_logistic_regression.certainOnly.pdf", onefile=TRUE)
+pdf("ecological.vs.orbitConvergence.phylo_logistic_regression.pdf", onefile=TRUE)
 #Loop through all retinal structures
 for(e in eco){
 	#Has retinal structure at all

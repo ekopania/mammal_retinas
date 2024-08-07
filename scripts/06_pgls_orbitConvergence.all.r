@@ -11,7 +11,8 @@ library(ggplot2)
 
 #Read in data
 my.tree<-read.tree("mam241.tre")
-mydata<-read.csv("mam241.pheno.csv")
+#mydata<-read.csv("mam241.pheno.csv")
+mydata<-read.csv("mam241.pheno.trimmedPrimates.csv")
 elton<-read.csv("EltonTraits_mammals.csv")
 gen_spec<-unlist(sapply(elton$Scientific, function(x) gsub(" ", "_", x)))
 elton$gen_spec<-gen_spec
@@ -27,7 +28,7 @@ for(i in my.tree$tip.label){
 	print(i)
 	#Check if species is in ecological dataset
 	eco_spec<-mydata$Data_Species[which(mydata$Hub_Species==i)]
-	#print(eco_spec)
+	print(eco_spec)
 	if(eco_spec %in% elton$gen_spec){
 		#Orbit convergence; my measurements if we took them, otherwise literature data
 		if(!(is.na(mydata$orbit_convergence_myMeasurement[which(mydata$Hub_Species==i)]))){
@@ -57,18 +58,18 @@ for(i in my.tree$tip.label){
 			forstrat<-c(forstrat, NA)
 		}
 		#Activity level; low power and doesn't make biological sense to consider all 7 possible combintations of nocturnal, crepuscular, diurnal
-		#Grouping into dark (nocturnal only, nocturnal and crepuscular); light (diurnal only); mix (any other combination)
+		#Grouping into dark (nocturnal only, nocturnal and crepuscular); light (diurnal only); complex (any other combination)
 		if(elton_line$Activity.Certainty=="ABC"){
 			if(elton_line$Activity.Nocturnal==1){
 				if(elton_line$Activity.Crepuscular==1){
 					if(elton_line$Activity.Diurnal==1){
-						activity<-c(activity, "mix")
+						activity<-c(activity, "complex")
 					} else{
 						activity<-c(activity, "dark")
 					}
 				} else{
 					if(elton_line$Activity.Diurnal==1){
-	                                        activity<-c(activity, "mix")
+	                                        activity<-c(activity, "complex")
 					} else{
 						activity<-c(activity, "dark")
 					}
@@ -76,9 +77,9 @@ for(i in my.tree$tip.label){
 			} else{
 				if(elton_line$Activity.Crepuscular==1){
 					if(elton_line$Activity.Diurnal==1){
-						activity<-c(activity, "mix")
+						activity<-c(activity, "complex")
 					} else{
-						activity<-c(activity, "mix")
+						activity<-c(activity, "complex")
 					}
 				} else{
 					if(elton_line$Activity.Diurnal==1){
@@ -109,7 +110,7 @@ for(i in my.tree$tip.label){
 		}
 		#Body mass - check for certain; take the log
 		if(elton_line$BodyMass.SpecLevel == 1){
-			size<-c(size, log(elton_line$BodyMass.Value))
+			size<-c(size, log10(elton_line$BodyMass.Value))
 		}else{
 			size<-c(size, NA)
 		}
@@ -132,7 +133,7 @@ pgls_df$activity<-as.factor(activity)
 pgls_df$pred<-as.factor(pred)
 pgls_df$herb<-as.factor(herb)
 print(pgls_df)
-write.table(pgls_df, file="orbit_convergence.eco_traits.txt", sep="\t", col.names=TRUE, row.names=FALSE, quote=FALSE)
+write.table(pgls_df, file="orbit_convergence.eco_traits.trimmedPrimates.txt", sep="\t", col.names=TRUE, row.names=FALSE, quote=FALSE)
 
 noctPred_keep<-Reduce(intersect, list(which(!(is.na(pgls_df$oc))), which(!(is.na(pgls_df$size))), which(!(is.na(pgls_df$pred))), which(!(is.na(pgls_df$act)))))
 noctPred_df<-pgls_df[noctPred_keep,]
@@ -248,6 +249,20 @@ print(summary(res_arbSize_P))
 post.hoc<-glht(res_arbSize_P, linfct=mcp(forstrat="Tukey"))
 summary(post.hoc)
 
+print("Herbivore hypothesis, no interaction, nlme BM:")
+res_herb_BM<-gls(oc~herb, data=smallHerb_df, correlation=corBM)
+print(summary(res_herb_BM))
+print("Herbivore hypothesis, no interaction, nlme Pagel:")
+res_herb_P<-gls(oc~herb, data=smallHerb_df, correlation=corPagel)
+print(summary(res_herb_P))
+
+print("Herbivore hypothesis, with size as covariate, no interaction, nlme BM:")
+res_herbSize_BM<-gls(oc~size+herb, data=smallHerb_df, correlation=corBM)
+print(summary(res_herbSize_BM))
+print("Herbivore hypothesis, with size as covariate, no interaction, nlme Pagel:")
+res_herbSize_P<-gls(oc~size+herb, data=smallHerb_df, correlation=corPagel)
+print(summary(res_herbSize_P))
+
 print("Small herbivore (prey) hypothesis, no interaction, nlme BM:")
 res_preySize_BM<-gls(oc~size+forstrat+herb, data=smallHerb_df, correlation=corBM)
 print(summary(res_preySize_BM))
@@ -295,8 +310,8 @@ lrtest<-function(model1,model2){
 }
 
 print("BM vs Pagel")
-BMfits<-c("res_size_BM", "res_pred_BM", "res_predSize_BM", "res_act_BM", "res_actSize_BM", "res_predAct_BM", "res_predActSize_BM", "res_arb_BM", "res_arbSize_BM", "res_preySize_BM", "res_forstratHerbIntxn_BM", "res_sizeHerbIntxn_BM")
-Pagelfits<-c("res_size_P", "res_pred_P", "res_predSize_P", "res_act_P", "res_actSize_P", "res_predAct_P", "res_predActSize_P", "res_arb_P", "res_arbSize_P", "res_preySize_P", "res_forstratHerbIntxn_P", "res_sizeHerbIntxn_P")
+BMfits<-c("res_size_BM", "res_pred_BM", "res_predSize_BM", "res_act_BM", "res_actSize_BM", "res_predAct_BM", "res_predActSize_BM", "res_arb_BM", "res_arbSize_BM", "res_herb_BM", "res_herbSize_BM", "res_preySize_BM", "res_forstratHerbIntxn_BM", "res_sizeHerbIntxn_BM")
+Pagelfits<-c("res_size_P", "res_pred_P", "res_predSize_P", "res_act_P", "res_actSize_P", "res_predAct_P", "res_predActSize_P", "res_arb_P", "res_arbSize_P", "res_herb_P", "res_herbSize_P", "res_preySize_P", "res_forstratHerbIntxn_P", "res_sizeHerbIntxn_P")
 for(i in 1:length(BMfits)){
 	print(paste(BMfits[i], "vs", Pagelfits[i]))
 	lrtest(get(BMfits[i]), get(Pagelfits[i]))
@@ -340,6 +355,8 @@ print("Size only vs foraging strategy w/ size as covariate:")
 lrtest(res_size_BM, res_arbSize_BM)
 print("Foraging strategy only vs foraging strategy w/ size as covariate:")
 lrtest(res_arb_BM, res_arbSize_BM)
+print("Herbivory only vs herbivory w/ size as covariate:")
+lrtest(res_herb_BM, res_herbSize_BM)
 print("Foraging strategy only vs herbivory and foraging strategy w/ size as covariate:")
 lrtest(res_arbSize_BM, res_preySize_BM)
 print("herbivory and foraging strategy w/ size as covariate vs interaction between foraging strat and herb:")
@@ -351,6 +368,8 @@ print("Size only vs foraging strategy w/ size as covariate:")
 lrtest(res_size_P, res_arbSize_P)
 print("Foraging strategy only vs foraging strategy w/ size as covariate:")
 lrtest(res_arb_P, res_arbSize_P)
+print("Herbivory only vs herbivory w/ size as covariate:")
+lrtest(res_herb_P, res_herbSize_P)
 print("Foraging strategy only vs herbivory and foraging strategy w/ size as covariate:")
 lrtest(res_arbSize_P, res_preySize_P)
 print("herbivory and foraging strategy w/ size as covariate vs interaction between foraging strat and herb:")
@@ -359,11 +378,11 @@ print("herbivory and foraging strategy w/ size as covariate vs interaction betwe
 lrtest(res_preySize_P, res_sizeHerbIntxn_P)
 
 #Plot oc by each variable separate (boxplots)
-pdf("orbit_convergence_by_eco.boxplots.pdf", onefile=TRUE)
+pdf("orbit_convergence_by_eco.boxplots.trimmedPrimates.pdf", onefile=TRUE)
 
 pgls_df_size<-pgls_df[intersect(which(!(is.na(pgls_df$size))), which(!(is.na(pgls_df$oc)))), ]
 p<-ggplot(pgls_df_size, aes(x=size, y=oc)) + geom_point() + geom_smooth(method="lm")
-p<-p + labs(title="Orbit convergency by body mass", x="log(Body mass (g))", y="Orbit convergence (degrees)") + theme_minimal()
+p<-p + labs(title="Orbit convergency by body mass", x="log10(Body mass (g))", y="Orbit convergence (degrees)") + theme_minimal()
 print(p)
 
 p<-ggplot(subset(pgls_df, !(is.na(activity))), aes(x=activity, y=oc)) + geom_violin() + geom_boxplot(width=0.1) + geom_jitter(shape=16, position=position_jitter(0.2))
