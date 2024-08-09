@@ -1,0 +1,99 @@
+// Macro for analyzing retinal topography maps following the method of Moore et al. 2012
+
+// Open the ROI Manager
+// runMacro("RoiManagerMacros.txt")
+
+// If the retina image is going nasal -> temporal instead of T -> N, flip it
+
+// Manually mark points at extreme ends of topography map using Polygon Selections tool; Add[t] to Roi Manager
+
+// Make an ROI that is the smallest circle enclosing all points in the retinal topography map
+// runMacro("Smallest_Enclosing_Circle.txt")
+
+// Manually mark peak of retinal specialization using Point tool; Add[t] to Roi Manager
+
+// Get filenames for output
+sampleName = replace( getTitle(), ".png", "" );
+resultsFile = sampleName + "_Results.csv";
+
+// Rename ROIs
+roiManager("Select", 0);
+roiManager("Rename", "retina_circle");
+roiManager("Select", 1);
+roiManager("Rename", "specialization_peak");
+
+// Get the center point of all ROIs, which should be the center of the retina and the peak area of the retinal specialization
+run("Set Measurements...", "centroid redirect=None decimal=1");
+runMacro("GetAllRoiCentroids.txt")
+
+// Add a line ROI between these centroid points; note that the results table rows are 0-based, even though they appear 1-based on the ImageJ GUI (weird choice, ImageJ)
+x1 = getResult("X", 0);
+y1 = getResult("Y", 0);
+x2 = getResult("X", 1);
+y2 = getResult("Y", 1);
+makeLine(x1, y1, x2, y2);
+roiManager("Add");
+roiManager("Select", roiManager("Count")-1);
+roiManager("Rename", "specialization_line");
+
+// Measure the length and angle of this line
+roiManager("Measure");
+saveAs("Results", resultsFile);
+
+// Draw a horizontal line through the center of the retinal specialization ("horizontal" to the circle, not necessarily imageJ!)
+roiManager("Select", 0);
+run("Set Measurements...", "area mean standard bounding redirect=None decimal=1");
+run("Measure");
+startX = getResult("BX",nResults-1);
+endX = getResult("BX",nResults-1)+getResult("Width",nResults-1);
+y = getResult("Y",1)
+makeLine(startX,y,endX,y);
+roiManager("Add");
+roiManager("Select", roiManager("Count")-1);
+roiManager("Rename", "horizontal_line");
+
+//Place 21 points evenly spaced across vertical and horizontal axes of retina
+
+//Get length of horizontal line
+run("Measure");
+hzLen = getResult("Length", nResults-1);
+//Loop through and place 21 evently spaced points across horizontal line
+x = startX
+for (i=1; i<=21; i+=1){
+    makePoint(x, y);
+    roiManager("Add");
+    roiManager("Select", roiManager("Count")-1);
+    roiManager("Rename", "tn"+i);
+    x+=hzLen/21;
+}
+
+//Draw vertical line through retina outline circle
+roiManager("Select", 0);
+run("Set Measurements...", "area mean standard bounding redirect=None decimal=1");
+run("Measure");
+startY = getResult("BY",nResults-1);
+endY = getResult("BY",nResults-1)+getResult("Height",nResults-1);
+x = getResult("X",1)
+makeLine(x,startY,x,endY);
+roiManager("Add");
+roiManager("Select", roiManager("Count")-1);
+roiManager("Rename", "vertical_line");
+
+//Get length of vertical line
+run("Measure");
+vtLen = getResult("Length", nResults-1);
+//Loop through and place 21 evently spaced points across horizontal line
+y = startY
+for (i=1; i<=21; i+=1){
+    makePoint(x, y);
+    roiManager("Add");
+    roiManager("Select", roiManager("Count")-1);
+    roiManager("Rename", "dv"+i);
+    y+=vtLen/21;
+}
+
+// Save results table and ROIs
+saveAs("Results", resultsFile);
+run("From ROI Manager");
+saveAs("Tiff", sampleName + ".tif");
+// run("Close");

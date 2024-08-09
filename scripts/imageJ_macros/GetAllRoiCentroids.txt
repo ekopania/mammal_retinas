@@ -1,0 +1,4 @@
+// The macro records the centroid position of all ROIs and outputs the result in a table
+
+roiManager("Deselect"); 
+roiManager("multi-measure measure_all");
