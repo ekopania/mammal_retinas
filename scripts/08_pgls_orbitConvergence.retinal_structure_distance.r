@@ -20,18 +20,10 @@ elton$gen_spec<-gen_spec
 #PDF file for output plots
 pdf("orbitConvergence_specializationDistance.pdf", onefile=TRUE, height=8.5, width=11)
 
-#Get body size data from elton traits
+#Get body size data from elton traits as log10 of body mass
 size<-c()
 for(i in all_retina$Data_Species){
-	#Manually input for species not in Elton Traits database
-	if(i=="Canis_lupus_familiaris"){
-		size<-c(size, log10(22025)) #Median for beagle and German shepherd, the species used in the retinal topo map study
-	} else if(i=="Camelus_dromedarius"){
-		size<-c(size, log10(495000)) #From https://animaldiversity.org/accounts/Camelus_dromedarius/
-	#Get body mass from Elton Traits database
-	} else{
-		size<-c(size, log10(elton$BodyMass.Value[which(elton$gen_spec==i)]))
-	}
+	size<-c(size, log10(elton$BodyMass.Value[which(elton$gen_spec==i)]))
 }
 
 #Set up df for pgls
@@ -52,6 +44,7 @@ print(tree_keep)
 
 #Set up correlation strugure and run pgls
 spp<-pgls_df$species
+print(paste("Total number of species in analysis:", length(spp)))
 corPagel<-corPagel(1, phy=tree_keep,form=~spp)
 
 print("Orbit convergence vs relative distance, nlme Pagel:")
@@ -69,11 +62,6 @@ print(summary(res_dist_size))
 print("Orbit convergence vs relative TEMPORAL distance, size as covariate, nlme Pagel:")
 res_temporal_size<-gls(temporal_shift~orbit_convergence + body_mass, data=pgls_df, correlation=corPagel)
 print(summary(res_temporal_size))
-
-#phylores<-residuals(res_temporal)
-#phylores_lambda<-phyl.resid(tree_keep, x=pgls_df$temporal_shift, Y=pgls_df$orbit_convergence, method="lambda")
-#print(phylores)
-#print(phylores_lambda)
 
 #Get predicted values based on pgls and use to setup phylogenetically corrected line for plot
 print("Predicted temporal shifts for orbit convergence values of 0 and 90:")
@@ -96,8 +84,8 @@ p<-p + theme_minimal() + geom_text(x=75, y=0.75, label=paste("PGLS P =",rd_p)) +
 p<-p + stat_smooth(method="glm", geom="smooth", se=FALSE, fullrange=TRUE)
 print(p)
 
-p<-ggplot(pgls_df, aes(x=orbit_convergence, y=temporal_shift)) + geom_point(size=10) #color=specialization_angle in aes if coloring by angle
-p<-p + labs(x="Orbit convergence angle", y="Specialization relative temporal distance", title="Orbit convergence vs specialization relative temporal distance") #, colour="Specialization angle")
+p<-ggplot(pgls_df, aes(x=orbit_convergence, y=temporal_shift, color=specialization_angle)) + geom_point(size=10) #color=specialization_angle in aes if coloring by angle
+p<-p + labs(x="Orbit convergence angle", y="Specialization relative temporal distance", title="Orbit convergence vs specialization relative temporal distance", colour="Specialization angle")
 #Add a color scale gradient based on angle of specialization placement
 #p<-p + scale_colour_gradientn(colours = c("orange","gray50","purple4","gray50","orange"), values = c(0,0.25,0.5,0.75, 1), limits=c(0,360), labels=c(0, 90, 180, 270, 360))
 p<-p + theme_minimal() + geom_text(x=75, y=0.75, label=paste("PGLS P =",ts_p)) + xlim(0,90)
