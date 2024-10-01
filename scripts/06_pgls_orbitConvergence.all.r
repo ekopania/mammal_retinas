@@ -198,25 +198,16 @@ summary(post.hoc)
 print("Nocturnal predation hypothesis, nlme BM:")
 res_predAct_BM<-gls(oc~pred+activity+pred:activity, data=noctPred_df, correlation=corBM)
 print(summary(res_predAct_BM))
-#post.hoc<-glht(res_predAct_BM, linfct=mcp(pred:activity="Tukey"))
-#post.hoc<-glht(res_predAct_BM, linfct=mcp())
-#summary(post.hoc)
 print("Nocturnal predation hypothesis, nlme Pagel:")
 res_predAct_P<-gls(oc~pred+activity+pred:activity, data=noctPred_df, correlation=corPagel)
 print(summary(res_predAct_P))
-#post.hoc<-glht(res_predAct_P, linfct=mcp(pred:activity="Tukey"))
-#summary(post.hoc)
 
 print("Nocturnal predation hypothesis, with size as covariate, nlme BM:")
 res_predActSize_BM<-gls(oc~size+pred+activity+pred:activity, data=noctPred_df, correlation=corBM)
 print(summary(res_predActSize_BM))
-#post.hoc<-glht(res_predActSize_BM, linfct=mcp(pred:activity="Tukey"))
-#summary(post.hoc)
 print("Nocturnal predation hypothesis, with size as covariate, nlme Pagel:")
 res_predActSize_P<-gls(oc~size+pred+activity+pred:activity, data=noctPred_df, correlation=corPagel)
 print(summary(res_predActSize_P))
-#post.hoc<-glht(res_predActSize_P, linfct=mcp(pred:activity))
-#summary(post.hoc)
 
 smallHerb_keep<-Reduce(intersect, list(which(!(is.na(pgls_df$oc))), which(!(is.na(pgls_df$size))), which(!(is.na(pgls_df$herb))), which(!(is.na(pgls_df$forstrat)))))
 smallHerb_df<-pgls_df[smallHerb_keep,]
@@ -266,35 +257,23 @@ print(summary(res_herbSize_P))
 print("Small herbivore (prey) hypothesis, no interaction, nlme BM:")
 res_preySize_BM<-gls(oc~size+forstrat+herb, data=smallHerb_df, correlation=corBM)
 print(summary(res_preySize_BM))
-#post.hoc<-glht(res_preySize_BM, linfct=mcp(herb="Tukey"))
-#summary(post.hoc)
 print("Small herbivore (prey) hypothesis, no interaction, nlme Pagel:")
 res_preySize_P<-gls(oc~size+forstrat+herb, data=smallHerb_df, correlation=corPagel)
 print(summary(res_preySize_P))
-#post.hoc<-glht(res_preySize_P, linfct=mcp(herb="Tukey"))
-#summary(post.hoc)
 
 print("Small herbivore (prey) hypothesis, with forstrat:herb interaction, nlme BM:")
 res_forstratHerbIntxn_BM<-gls(oc~size+forstrat+herb+forstrat:herb, data=smallHerb_df, correlation=corBM)
 print(summary(res_forstratHerbIntxn_BM))
-#post.hoc<-glht(res_forstratHerbIntxn_BM, linfct=mcp(size:forstrat:herb="Tukey"))
-#summary(post.hoc)
 print("Small herbivore (prey) hypothesis, with forstrat:herb interaction, nlme Pagel:")
 res_forstratHerbIntxn_P<-gls(oc~size+forstrat+herb+forstrat:herb, data=smallHerb_df, correlation=corPagel)
 print(summary(res_forstratHerbIntxn_P))
-#post.hoc<-glht(res_forstratHerbIntxn_P, linfct=mcp(size:forstrat:herb="Tukey"))
-#summary(post.hoc)
 
 print("Small herbivore (prey) hypothesis, with size:herb interaction, nlme BM:")
 res_sizeHerbIntxn_BM<-gls(oc~size+forstrat+herb+size:herb, data=smallHerb_df, correlation=corBM)
 print(summary(res_sizeHerbIntxn_BM))
-#post.hoc<-glht(res_sizeHerbIntxn_BM, linfct=mcp(size:forstrat:herb="Tukey"))
-#summary(post.hoc)
 print("Small herbivore (prey) hypothesis, with interaction, nlme Pagel:")
 res_sizeHerbIntxn_P<-gls(oc~size+forstrat+herb+size:herb, data=smallHerb_df, correlation=corPagel)
 print(summary(res_sizeHerbIntxn_P))
-#post.hoc<-glht(res_sizeHerbIntxn_P, linfct=mcp(size:forstrat:herb="Tukey"))
-#summary(post.hoc)
 
 #Likelihood ratio test function from phytools blog: http://blog.phytools.org/2014/08/comparing-models-fit-using-gls-with.html
 lrtest<-function(model1,model2){
@@ -402,111 +381,3 @@ p<-p + labs(title="Orbit convergency by herbivory", x="Herbivory", y="Orbit conv
 print(p)
 
 dev.off()
-
-q()
-####OLD - caper version
-#pdf("orbit_convergence_pgls_caper_plots.pdf", onefile=TRUE)
-#
-#Set up compdata object for size, predation, and activity
-#comp.data<-comparative.data(my.tree, df[,c("oc","pred", "activity","size","species")], names.col="species", vcv.dim=2, warn.dropped=TRUE)
-#print(comp.data)
-#
-##Test association with size
-#print("Is OC correlated with body mass?")
-##comp.data<-comparative.data(my.tree, df[,c("oc","size","species")], names.col="species", vcv.dim=2, warn.dropped=TRUE)
-##print(comp.data)
-#res_size<-pgls(oc~size, data=comp.data)
-#print(summary(res_size))
-#anova(res_size)
-#plot(res_size, main="Size")
-#
-##Test association with each ecological condition with size as a covariate
-#print("Predator hypothesis with size:")
-##comp.data<-comparative.data(my.tree, df[,c("oc","pred","size","species")], names.col="species", vcv.dim=2, warn.dropped=TRUE)
-##print(comp.data)
-#res_predSize<-pgls(oc~pred*size, data=comp.data)
-#print(summary(res_predSize))
-#anova(res_predSize)
-#plot(res_predSize, main="Predation hypothesis with size")
-
-#print("Nocturnal hypothesis with size:")
-##comp.data<-comparative.data(my.tree, df[,c("oc","activity","size","species")], names.col="species", vcv.dim=2, warn.dropped=TRUE)
-##print(comp.data)
-#res_actSize<-pgls(oc~activity*size, data=comp.data)
-#print(summary(res_actSize))
-#anova(res_actSize)
-#plot(res_actSize, main="Nocturnal hypothesis with size")
-#
-##Test nocturnal predation hypothesis (interaction between nocturnal and predator, body size as covariate)
-#print("Nocturnal predation hypothesis with size:")
-##comp.data<-comparative.data(my.tree, df[,c("oc","pred","activity","size","species")], names.col="species", vcv.dim=2, warn.dropped=TRUE)
-##print(comp.data)
-#res_predActSize<-pgls(oc~pred*activity*size, data=comp.data)
-#print(summary(res_predActSize))
-#anova(res_predActSize)
-#plot(res_predActSize, main="Nocturnal predation hypothesis with size")
-#
-##Set up compdata object for size, foraging strategy, and herbivory
-#comp.data<-comparative.data(my.tree, df[,c("oc","forstrat","herb","size","species")], names.col="species", vcv.dim=2, warn.dropped=TRUE)
-#print(comp.data)
-#
-##Test association with size - redo for species with foraging strategy and herbivory data
-#print("Is OC correlated with body mass?")
-##comp.data<-comparative.data(my.tree, df[,c("oc","size","species")], names.col="species", vcv.dim=2, warn.dropped=TRUE)
-##print(comp.data)
-#res_size2<-pgls(oc~size, data=comp.data)
-#print(summary(res_size2))
-#anova(res_size2)
-#plot(res_size2, main="Size")
-#
-##Test arboreal hypothesis
-#print("Arboreal hypothesis with size:")
-##comp.data<-comparative.data(my.tree, df[,c("oc","forstrat","size","species")], names.col="species", vcv.dim=2, warn.dropped=TRUE)
-##print(comp.data)
-#res_arbSize<-pgls(oc~forstrat*size, data=comp.data)
-#print(summary(res_arbSize))
-#anova(res_arbSize)
-#plot(res_arbSize, main="Arboreal hypothesis with size")
-#
-##Test small herbivore hypothesis
-#print("Small herbivore (prey) hypothesis:")
-##comp.data<-comparative.data(my.tree, df[,c("oc","forstrat","herb","size","species")], names.col="species", vcv.dim=2, warn.dropped=TRUE)
-##print(comp.data)
-#res_preySize<-pgls(oc~forstrat*herb*size, data=comp.data)
-#print(summary(res_preySize))
-#anova(res_preySize)
-#plot(res_preySize, main="Small herbivore (prey) hypothesis")
-#
-#dev.off()
-#
-##Log likelihood of each model
-#print("size")
-#print(logLik(res_size))
-#print("size*predation")
-#print(logLik(res_predSize))
-#print("size*activity")
-#print(logLik(res_actSize))
-#print("size*activity*predation")
-#print(logLik(res_predActSize))
-#print("size2")
-#print(logLik(res_size2))
-#print("size*forstrat")
-#print(logLik(res_arbSize))
-#print("size*forstrat*herbivory")
-#print(logLik(res_preySize))
-#
-##Anovas to compare models
-#print("size only vs predation vs nocturnal predation")
-#anova(res_predActSize, res_predSize, res_size)
-#print("size only vs nocturnal vs nocturnal predation")
-#anova(res_predActSize, res_actSize, res_size)
-#print("size only vs foraging stragegy vs prey")
-#anova(res_preySize, res_arbSize, res_size2)
-#
-##AIC to compare models
-#print("size only vs predation vs nocturnal predation")
-#AIC(res_predActSize, res_predSize, res_size)
-#print("size only vs nocturnal vs nocturnal predation")
-#AIC(res_predActSize, res_actSize, res_size)
-#print("size only vs foraging stragegy vs prey")
-#AIC(res_preySize, res_arbSize, res_size2)
