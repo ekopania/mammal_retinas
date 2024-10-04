@@ -58,38 +58,30 @@ for(i in my.tree$tip.label){
 			forstrat<-c(forstrat, NA)
 		}
 		#Activity level; low power and doesn't make biological sense to consider all 7 possible combintations of nocturnal, crepuscular, diurnal
-		#Grouping into dark (nocturnal only, nocturnal and crepuscular); light (diurnal only); complex (any other combination)
+		#Grouping into nocturnal (nocturnal only); diurnal (diurnal only); crepuscular/cathemeral (any other combination)
 		if(elton_line$Activity.Certainty=="ABC"){
-			if(elton_line$Activity.Nocturnal==1){
-				if(elton_line$Activity.Crepuscular==1){
-					if(elton_line$Activity.Diurnal==1){
-						activity<-c(activity, "complex")
-					} else{
-						activity<-c(activity, "dark")
-					}
-				} else{
-					if(elton_line$Activity.Diurnal==1){
-	                                        activity<-c(activity, "complex")
-					} else{
-						activity<-c(activity, "dark")
-					}
-				}
-			} else{
-				if(elton_line$Activity.Crepuscular==1){
-					if(elton_line$Activity.Diurnal==1){
-						activity<-c(activity, "complex")
-					} else{
-						activity<-c(activity, "complex")
-					}
-				} else{
-					if(elton_line$Activity.Diurnal==1){
-						activity<-c(activity, "light")
-					}
-				}
-			}
-	        } else{
-			activity<-c(activity, NA)
-		}
+                        if(elton_line$Activity.Nocturnal==1){
+                                if(elton_line$Activity.Crepuscular==1){
+                                        activity<-c(activity, "crep_cath")
+                                } else{
+                                        if(elton_line$Activity.Diurnal==1){
+                                                activity<-c(activity, "crep_cath")
+                                        } else{
+                                                activity<-c(activity, "nocturnal")
+                                        }
+                                }
+                        } else{
+                                if(elton_line$Activity.Crepuscular==1){
+                                        activity<-c(activity, "crep_cath")
+                                } else{
+                                        if(elton_line$Activity.Diurnal==1){
+                                                activity<-c(activity, "diurnal")
+                                        }
+                                }
+                        }
+                } else{
+                        activity<-c(activity, NA)
+                }
 		#Predator (>70% diet animal, not scavenger) or herbivore (>70% diet plant); need to have these as two separate binary trait because not enough variance within a third "omnivore" category to run pgls, and I don't have any specific hypotheses for omnivores
 		if(elton_line$Diet.Certainty=="ABC"){
 			predScore<-sum(elton_line[c("Diet.Inv","Diet.Vend","Diet.Vect","Diet.Vfish","Diet.Vunk")])
