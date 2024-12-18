@@ -1,8 +1,5 @@
 #PURPOSE: Perform PGLS tests for orbital convergence associated with combinations of ecological traits
 
-#SEE SCRIPT 7!!!
-#May also need to test for multicorrelation among independent variables? https://cran.r-project.org/web/packages/car/car.pdf; also see Esteban's papers where they did this
-
 library(caper)
 library(nlme)
 library(multcomp)
@@ -131,7 +128,7 @@ noctPred_keep<-Reduce(intersect, list(which(!(is.na(pgls_df$oc))), which(!(is.na
 noctPred_df<-pgls_df[noctPred_keep,]
 
 ##Run PGLS (ANOVA and ANCOVA) with nlme
-#Posthoc  Tukey tests to compare group means with multcomp: https://cran.r-project.org/web/packages/multcomp/vignettes/multcomp-examples.pdf
+#Posthoc Tukey tests to compare group means with multcomp: https://cran.r-project.org/web/packages/multcomp/vignettes/multcomp-examples.pdf
 spp<-noctPred_df$species
 corBM<-corBrownian(phy=my.tree,form=~spp)
 corPagel<-corPagel(1, phy=my.tree,form=~spp)
@@ -348,8 +345,8 @@ lrtest(res_preySize_P, res_forstratHerbIntxn_P)
 print("herbivory and foraging strategy w/ size as covariate vs interaction between size and herb:")
 lrtest(res_preySize_P, res_sizeHerbIntxn_P)
 
-#Plot oc by each variable separate (boxplots)
-pdf("orbit_convergence_by_eco.boxplots.trimmedPrimates.pdf", onefile=TRUE)
+#Plot oc by each variable separate (violin plots) - Used in Figure 2 of manuscript
+pdf("orbit_convergence_by_eco.violinplots.trimmedPrimates.pdf", onefile=TRUE)
 
 pgls_df_size<-pgls_df[intersect(which(!(is.na(pgls_df$size))), which(!(is.na(pgls_df$oc)))), ]
 p<-ggplot(pgls_df_size, aes(x=size, y=oc)) + geom_point() + geom_smooth(method="lm")

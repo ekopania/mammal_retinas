@@ -15,19 +15,13 @@
 #
 ## Command(s) to run:
 
-#Comparisons to Elton Trait eco data
-#Rscript 02a_phytools_threshBayes.r
-
-#Comparisons to orbital convergence
-#Rscript 02b_phytools_threshBayes.orbital_convergence.r
-
-#Phylo logistic regression for continuous vs binary trait across phylo
-#Rscript 03_pgls_logistic.r
-
 #PGLS (ANOVA and ANCOVA) for testing association between orbit convergence and ecological conditions
-#Rscript 06_pgls_orbitConvergence.all.r
+#Rscript 02_pgls_orbitConvergence.all.r
 
 #PGLS (ANOVA and ANCOVA) for testing association between orbit convergence and retinal specialization
-Rscript 07_pgls_orbitConvergence.retinal_structure.r
+#Rscript 03_pgls_orbitConvergence.retinal_structure.r
+
+#PGLS (ANOVA and ANCOVA) for testing association between orbit convergence and relative temporal shift of the retinal specialization
+Rscript 04_pgls_orbitConvergence.retinal_structure_distance.r
 
 echo "Done!"

@@ -42,7 +42,7 @@ tree_keep<-keep.tip(myTree, pgls_df$species)
 print("TREE:")
 print(tree_keep)
 
-#Set up correlation strugure and run pgls
+#Set up correlation structure and run pgls
 spp<-pgls_df$species
 print(paste("Total number of species in analysis:", length(spp)))
 corPagel<-corPagel(1, phy=tree_keep,form=~spp)
@@ -84,6 +84,7 @@ p<-p + theme_minimal() + geom_text(x=75, y=0.75, label=paste("PGLS P =",rd_p)) +
 p<-p + stat_smooth(method="glm", geom="smooth", se=FALSE, fullrange=TRUE)
 print(p)
 
+#Used in Figure 4 of the paper
 p<-ggplot(pgls_df, aes(x=orbit_convergence, y=temporal_shift, color=specialization_angle)) + geom_point(size=10) #color=specialization_angle in aes if coloring by angle
 p<-p + labs(x="Orbit convergence angle", y="Specialization relative temporal distance", title="Orbit convergence vs specialization relative temporal distance", colour="Specialization angle")
 #Add a color scale gradient based on angle of specialization placement
@@ -101,59 +102,4 @@ plot(x=pgls_df$orbit_convergence, y=pgls_df$temporal_shift, xlab="Orbit converge
 text(x=pgls_df$orbit_convergence, y=pgls_df$temporal_shift, pgls_df$species)
 text(x=75, y=0.75, paste("PGLS P =",ts_p))
 
-#REPEAT WITHOUT MARINE (remove sea otter, walrus, elephant seal; leaving hippo for now)
-pgls_df_nomarine<-pgls_df[-(which(pgls_df$species %in% c("Enhydra_lutris", "Odobenus_rosmarus", "Mirounga_angustirostris"))),]
-tree_keep<-keep.tip(myTree, pgls_df$species)
-print("TREE:")
-print(tree_keep)
-
-#Set up correlation strugure and run pgls
-spp<-pgls_df_nomarine$species
-corPagel<-corPagel(1, phy=tree_keep,form=~spp)
-
-print("Orbit convergence vs relative distance, nlme Pagel, exclude marine species:")
-res_dist<-gls(orbit_convergence~relative_distance, data=pgls_df_nomarine, correlation=corPagel)
-print(summary(res_dist))
-
-print("Orbit convergence vs relative TEMPORAL distance, nlme Pagel, exclude marine species:")
-res_temporal<-gls(orbit_convergence~temporal_shift, data=pgls_df_nomarine, correlation=corPagel)
-print(summary(res_temporal))
-phylores<-residuals(res_temporal)
-
-print("Orbit convergence vs relative distance, size as covariate, nlme Pagel, exclude marine species:")
-res_dist<-gls(orbit_convergence~relative_distance + body_mass, data=pgls_df_nomarine, correlation=corPagel)
-print(summary(res_dist))
-
-print("Orbit convergence vs relative TEMPORAL distance, size as covariate, nlme Pagel, exclude marine species:")
-res_temporal<-gls(orbit_convergence~temporal_shift + body_mass, data=pgls_df_nomarine, correlation=corPagel)
-print(summary(res_temporal))
-
-#Plot
-rd_p<-round(summary(res_dist)$tTable["relative_distance","p-value"], 4)
-ts_p<-round(summary(res_temporal)$tTable["temporal_shift","p-value"], 4)
-
-p<-ggplot(pgls_df_nomarine, aes(x=orbit_convergence, y=relative_distance, color=specialization_angle)) + geom_point(size=10)
-p<-p + labs(x="Orbit convergence angle", y="Specialization relative distance", title="Orbit convergence vs specialization relative distance - exclude marine species", colour="Specialization angle")
-#Add a color scale gradient based on angle of specialization placement
-#p<-p + scale_colour_gradientn(colours = c("orange","gray50","purple4","gray50","orange"), values = c(0,0.25,0.5,0.75, 1), limits=c(0,360), labels=c(0, 90, 180, 270, 360))
-p<-p + theme_minimal() + geom_text(x=75, y=0.75, label=paste("PGLS P =",rd_p))
-p<-p + stat_smooth(method="glm", geom="smooth")
-print(p)
-
-p<-ggplot(pgls_df_nomarine, aes(x=orbit_convergence, y=temporal_shift, color=specialization_angle)) + geom_point(size=4)
-p<-p + labs(x="Orbit convergence angle", y="Specialization relative temporal distance", title="Orbit convergence vs specialization relative temporal distance - exclude marine species", colour="Specialization angle")
-#Add a color scale gradient based on angle of specialization placement
-p<-p + scale_colour_gradientn(colours = c("orange","gray50","purple4","gray50","orange"), values = c(0,0.25,0.5,0.75, 1), limits=c(0,360), labels=c(0, 90, 180, 270, 360))
-p<-p + theme_minimal() + geom_text(x=75, y=0.75, label=paste("PGLS P =",ts_p))
-print(p)
-
-#Plot species labels instead of points
-plot(x=pgls_df_nomarine$orbit_convergence, y=pgls_df_nomarine$relative_distance, xlab="Orbit convergence angle", ylab="Specialization relative distance", main="Orbit convergence vs specialization relative distance - exclude marine species", type="n")
-text(x=pgls_df_nomarine$orbit_convergence, y=pgls_df_nomarine$relative_distance, pgls_df_nomarine$species)
-text(x=75, y=0.75, paste("PGLS P =",rd_p))
-plot(x=pgls_df_nomarine$orbit_convergence, y=pgls_df_nomarine$temporal_shift, xlab="Orbit convergence angle", ylab="Specialization relative temporal distance", main="Orbit convergence vs specialization relative temporal distance - exclude marine species", type="n")
-text(x=pgls_df_nomarine$orbit_convergence, y=pgls_df_nomarine$temporal_shift, pgls_df_nomarine$species)
-text(x=75, y=0.75, paste("PGLS P =",ts_p))
-
 dev.off()
-

@@ -4,8 +4,9 @@ library(phytools)
 
 #Read in data
 my.tree0<-read.tree("mam241.tre")
-mydata0<-read.csv("mam241.pheno.csv")
-#elton0<-read.csv("EltonTraits_mammals.csv")
+#mydata0<-read.csv("mam241.pheno.csv")
+mydata0<-read.csv("mam241.pheno.trimmedPrimates.csv")
+#mydata0<-read.csv("mam241.pheno.downsample_groundHerb.csv")
 elton0<-read.csv("EltonTraits_mammals.csv")
 
 #Get species present in tree, eye data file, eco trait data file
@@ -35,19 +36,17 @@ for(i in 1:nrow(mydata0)){
 }
 names(orbit.convergence)<-my.species0
 
-#Plot whether species has orbit convergence data or not on  zoonomia tree
+#Plot whether species has orbit convergence data or not on zoonomia tree
 hasOC<-unlist(sapply(orbit.convergence, function(x) if(is.na(x)){"n"}else if(x==""){"n"}else{"y"}))
 names(hasOC)<-mydata0$Hub_Species
-print(paste("Orbit convergence data for", length(which(hasOC=="y"))))
-q()
-pdf("zoonomia_orbit_convergence_data.pdf", width=17, height=30, useDingbats=FALSE)
+print(paste("Orbit convergence data for", length(which(hasOC=="y")), "species"))
+pdf("zoonomia_orbit_convergence_data.trimmedPrimates.pdf", width=17, height=30, useDingbats=FALSE)
 dotTree(my.tree0, hasOC, colors=setNames(c("white","black"), c("n","y")), ftype="i")
 dev.off()
 
 #Remove species with missing orbit convergence data
 nomissing<-orbit.convergence[which(orbit.convergence!="")]
-#ret_certain<-rownames(orbit.convergence)[which(orbit.convergence$certainty=="A")]
-keep<-Reduce(intersect, list(inall, names(nomissing))) #ret_certain
+keep<-Reduce(intersect, list(inall, names(nomissing)))
 rm_spec<-my.tree0$tip.label[my.tree0$tip.label %in% keep == FALSE]
 my.tree<-drop.tip(my.tree0, rm_spec)
 print(my.tree)
@@ -69,6 +68,7 @@ head(predCols)
 predScore<-rowSums(predCols)
 predBin<-c()
 for(i in 1:nrow(elton.sort)){
+	#Only use high certainty diet data
         if(grepl("A", elton.sort$Diet.Certainty[i])){
                 if(predScore[i] >= 70){
                         predBin<-c(predBin, 1)
@@ -87,6 +87,7 @@ herbCols<-elton.sort[,c("Diet.Fruit", "Diet.Nect", "Diet.Seed", "Diet.PlantO")]
 herbScore<-rowSums(herbCols)
 plantBin<-c()
 for(i in 1:nrow(elton.sort)){
+	#Only use high certainty diet data
         if(grepl("A", elton.sort$Diet.Certainty[i])){
                 if(herbScore[i] >= 70){
                         plantBin<-c(plantBin, 1)
@@ -134,10 +135,11 @@ print(elton.sort)
 
 #Make tables and vectors for plotting
 
-#Continues values
+#Continuous values
 oc<-orbit.convergence[which(names(orbit.convergence) %in% keep)]
 stopifnot(all.equal(names(oc), mydata$Hub_Species))
-obj<-contMap(my.tree, oc, plot=FALSE)
+#Set up color bar with 90 as the max so Gorilla outlier doesn't stand out so much
+obj<-contMap(my.tree, oc, plot=FALSE, lims=c(min(oc),90))
 obj<-setMap(obj,invert=TRUE) #warmer colors for higher numbers
 
 #Phylogenetic signal for continuous trait
@@ -145,7 +147,7 @@ psk<-phylosig(my.tree, oc, method="K", test=TRUE, nsim=1000)
 print(psk)
 psl<-phylosig(my.tree, oc, method="lambda", test=TRUE, nsim=1000)
 print(psl)
-q()
+
 #Binary values
 phenos<-as.data.frame(cbind(elton.sort$ForStrat.Value, elton.sort$Activity.Nocturnal, elton.sort$Activity.Crepuscular, elton.sort$Activity.Diurnal, elton.sort$predBin, elton.sort$small_herb))
 dim(phenos)
@@ -182,4 +184,8 @@ for(i in 1:ncol(phenos)){
 	add.color.bar(leg=0.2, cols=obj$cols, title="Orbit Convergence Angle", prompt=FALSE, lims=c(min(oc), max(oc)))
 	title(paste("Orbit Convergence and",colnames(phenos)[i]), line=-1)
 }
+#Just orbit convergence tree (colored by value, no eco traits) - Used in Figure 2 of paper
+plot(obj$tree,colors=obj$cols, add=FALSE, ftype="i",lwd=5, xlim=get("last_plot.phylo", envir=.PlotPhyloEnv)$x.lim, ylim=get("last_plot.phylo",envir=.PlotPhyloEnv)$y.lim)
+add.color.bar(leg=0.2, cols=obj$cols, title="Orbit Convergence Angle", prompt=FALSE, lims=c(min(oc), max(oc)))
+title("Orbit Convergence", line=-1)
 dev.off()

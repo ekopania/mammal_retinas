@@ -14,8 +14,6 @@ library(ggplot2)
 
 #Read in data
 myTree<-read.tree("mam241.tre")
-#FOR JUST ONE TRAIT AT A TIME
-#ret<-"fovea"
 #FOR LOOPING THROUGH MULTIPLE TRAITS TO TEST SEVERAL HYPOTHESES
 rets<-c("fovea|area centralis","horizontal streak")
 #all_retina<-read.csv("mam241.pheno.csv")
@@ -51,9 +49,8 @@ all_retina$size<-size
 
 #Get species w/ no missing data for retinal category and ecological category
 retina_noMissing<-all_retina$Hub_Species[which(all_retina$retinal_structure!="")]
-retina_certain<-all_retina$Hub_Species[which(all_retina$certainty=="A")]
 cont_noMissing<-all_retina$Hub_Species[which(all_retina$orbit_convergence_merged!="")]
-keep<-Reduce(intersect, list(retina_noMissing, cont_noMissing, myTree$tip.label)) #, retina_certain))
+keep<-Reduce(intersect, list(retina_noMissing, cont_noMissing, myTree$tip.label))
 #Remove Gorilla outlier
 #keep<-keep[-which(keep=="Gorilla_gorilla")]
 #Remove all primates
@@ -61,9 +58,6 @@ keep<-Reduce(intersect, list(retina_noMissing, cont_noMissing, myTree$tip.label)
 #keep<-keep[-which(keep %in% primates)]
 retina_keep<-all_retina[which(all_retina$Hub_Species %in% keep),]
 
-#Make retinal specialization categorical
-#Options: horizontal streak only, fovea or area centralis only, no data/NA, mix of specialization types
-#cat_trait<-unlist(sapply(retina_keep$retinal_structure, function(x) if(x=="horizontal streak"){"hs"}else if(x %in% c("fovea","area centralis")){"f_ac"}else if(x==""){NA}else{"mix"}))
 #Make retinal specialization binary
 cat_trait<-unlist(sapply(retina_keep$retinal_structure, function(x) if(x=="horizontal streak"){"hs"}else if(x %in% c("fovea","area centralis")){"f_ac"}else{NA}))
 
@@ -83,72 +77,6 @@ print(pgls_df)
 tree_keep<-keep.tip(myTree, pgls_df$species)
 print("TREE:")
 print(tree_keep)
-
-
-#Get size residuals for orbit convergence
-#model<-lm(orbit_convergence_merged ~ size, data=pgls_df)
-#summary(model)
-#oc_sizeRes<-resid(model)
-#print(oc_sizeRes)
-#pdf("test_plots.pdf", onefile=TRUE)
-#plot(pgls_df$size, pgls_df$orbit_convergence_merged)
-#plot(pgls_df$size, oc_sizeRes)
-#dev.off()
-#pgls_df$oc_sizeRes<-as.numeric(oc_sizeRes)
-
-##Run PGLS (ANOVA and ANCOVA) with caper
-#pdf("orbit_convergence_by_specialization_caperPGLSplots.pdf", onefile=TRUE)
-##Set up comparative data object for pgls
-#comp.data<-comparative.data(tree_keep, pgls_df, names.col="species", vcv.dim=3, warn.dropped=TRUE)
-#print(comp.data)
-#print("size only, caper BM:")
-#res_size<-pgls(orbit_convergence_merged~size, data=comp.data)
-#print(summary(res_size))
-#print("retinal specialization only, caper BM:")
-#resBM<-pgls(orbit_convergence_merged~retinal_structure, data=comp.data)
-#print(summary(resBM))
-#plot(resBM)
-#print("retinal specialization only, caper lambda ML:")
-#res_lambdaML<-pgls(orbit_convergence_merged~retinal_structure, data=comp.data, lambda="ML")
-#print(summary(res_lambdaML))
-#plot(res_lambdaML)
-#lm.lk<-pgls.profile(res_lambdaML, which="lambda")
-#plot(lm.lk)
-#print("Orbit convergence by specialization, with size as a covariate, caper BM:")
-#resBM_COVsize<-pgls(orbit_convergence_merged~size+retinal_structure, data=comp.data)
-#print(summary(resBM_COVsize))
-#plot(resBM_COVsize)
-#print("Orbit convergence by specialization, with size as a covariate, caper lambda ML:")
-#res_lambdaML_COVsize<-pgls(orbit_convergence_merged~size+retinal_structure, data=comp.data, lambda="ML")
-#print(summary(res_lambdaML_COVsize))
-#plot(res_lambdaML_COVsize)
-#lm.lk<-pgls.profile(res_lambdaML_COVsize, which="lambda")
-#plot(lm.lk)
-##print("Residuals of orbit convergence vs size compared to retinal specialization")
-##res<-pgls(oc_sizeRes~retinal_structure-1, data=comp.data)
-##print(summary(res))
-##plot(res)
-#
-#print("compare caper models:")
-#AIC(resBM, res_lambdaML, resBM_COVsize, res_lambdaML_COVsize)
-#logLik(resBM)
-#logLik(res_lambdaML)
-#logLik(resBM_COVsize)
-#logLik(res_lambdaML_COVsize)
-#
-#dev.off()
-#
-#phylo_residualsBM<-resid(resBM)
-#phylo_residualsBM_sort<-phylo_residualsBM[match(pgls_df$species, rownames(phylo_residualsBM)),]
-#print(head(phylo_residualsBM_sort))
-#stopifnot(all.equal(names(phylo_residualsBM_sort), pgls_df$species))
-#pgls_df$phylo_residualsBM<-phylo_residualsBM_sort
-#phylo_residualsP<-resid(res_lambdaML)
-#phylo_residualsP_sort<-phylo_residualsP[match(pgls_df$species, rownames(phylo_residualsP)),]
-#print(head(phylo_residualsP_sort))
-#stopifnot(all.equal(names(phylo_residualsP_sort), pgls_df$species))
-#pgls_df$phylo_residualsP<-phylo_residualsP_sort
-#write.table(pgls_df, file="orbit_convergence_by_specialization_data.txt", row.names=FALSE, col.names=TRUE, sep="\t", quote=FALSE)
 
 
 ##Run PGLS (ANOVA and ANCOVA) with nlme
@@ -216,7 +144,7 @@ names(anova_oc)<-pgls_df$species
 res_phylANOVA<-phylANOVA(tree_keep, anova_retina, anova_oc, nsim=10000)
 print(res_phylANOVA)
 
-#Plot oc by retinal structure as violin plots
+#Plot oc by retinal structure as violin plots - Used in Figure 4 of the paper
 pdf("orbit_convergence_by_specialization.violins.trimmedPrimates.pdf")
 
 p<-ggplot(pgls_df, aes(x=retinal_structure, y=orbit_convergence_merged)) + geom_violin() + geom_boxplot(width=0.1) + geom_jitter(shape=16, position=position_jitter(0.2))
@@ -232,15 +160,3 @@ print(p)
 #print(p)
 
 dev.off()
-
-#OLD
-#print("Orbit convergence by specialization, with size as a covariate (interaction term)")
-#res<-pgls(orbit_convergence_merged~retinal_structure*size-1, data=comp.data)
-#print(summary(res))
-#plot(res)
-#print("nlme version:")
-#nlme_res<-gls(orbit_convergence_merged~size*retinal_structure-1, data=pgls_df, correlation=corBM)
-#print(nlme_res)
-#summary(nlme_res)
-#post.hoc<-glht(nlme_res, linfct=mcp(retinal_structure="Tukey"))
-#summary(post.hoc) 
