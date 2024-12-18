@@ -18,26 +18,18 @@
 #NOTE: Tree cannot have bootstrap labels; run remove_bootstraps.r before running BayesTraits to remove!!!
 btpath="/ihome/nclark/emk270/software/BayesTraitsV4.0.1-Linux/BayesTraitsV4"
 tree="mam241_acOnly_predScore.70.nexus"
-#Options: "mam241_acOnly_predScore.70_ForStrat.Value.MandAr.nexus" "mam241_acOnly_predScore.70.nexus"  "mam241_retinalStructure_ForStrat.Value.nexus" #mam241_hzOnly_ForStrat.Value.G_herbScore.70_BodyMass.Value.1e+05.nexus #mam241_retinalStructure_pupil_shape.certainOnly.nexus #mam241_retinalStructure_unobstructed_hz.nexus
+#Options: "mam241_acOnly_predScore.70_ForStrat.Value.MandAr.nexus" "mam241_acOnly_predScore.70.nexus"  "mam241_retinalStructure_ForStrat.Value.nexus" #mam241_hzOnly_ForStrat.Value.G_herbScore.70_BodyMass.Value.1e+05.nexus #mam241_retinalStructure_unobstructed_hz.nexus
 rets=("acAny" "acOnly")
-#Options: ("acAny" "acOnly") ("hzAny" "hzOnly") ("fovea" "areacentralis" "horizontalstreak" "none" "verticalstreak")
-#("foveaAny" "foveaOnly" "areacentralisAny" "areacentralisOnly" "horizontalstreakAny" "horizontalstreakOnly" "noneAny" "noneOnly" "verticalstreakAny" "verticalstreakOnly")
+#Options: ("acAny" "acOnly") ("hzAny" "hzOnly")
 
 #For foraging strategy traits
 #eco_traits=("G" "M" "Ar" "A" "S")
 #eco_traits=("G")
 #tree="mam241_retinalStructure_ForStrat.Value.threshold.nexus"
 
-#For activity pattern traits
-#eco_traits=("Nocturnal" "Crepuscular" "Diurnal")
-#tree=""
-
 #For specifically testing the grazer hypothesis (ground foraging, 100% plant diet)
 eco_traits=("predScore.70")
 #Options: "G_herbScore.70_BodyMass.Value.1e+05", "unobstructed_hz", "G", "predScore.70_ForStrat.Value.MandAr", "predScore.70"
-
-#For pupile shape
-#eco_traits=("circular" "subcircular" "vertical" "horizontal" "u-shape")
 
 ctl="dependent.ML.ctl" #dependent or independent
 numit=3

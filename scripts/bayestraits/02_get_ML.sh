@@ -22,7 +22,6 @@ ls ac*predScore*_mam241.noMissingData.independent.ML.?.Log.txt h*G*_mam241.noMis
 #ls ac*predScore*_mam241.noMissingData.certainOnly.independent.ML.?.Log.txt h*G*_mam241.noMissingData.certainOnly.independent.ML.?.Log.txt h*_unobstructed_hz_mam241.noMissingData.certainOnly.independent.ML.?.Log.txt | while read file; do
 #ls ac*predScore*_mam241.noMissingData.certainOnly.terrestrial.independent.ML.?.Log.txt h*G*_mam241.noMissingData.certainOnly.terrestrial.independent.ML.?.Log.txt h*_unobstructed_hz_mam241.noMissingData.certainOnly.terrestrial.independent.ML.?.Log.txt | while read file; do
 #ls ac*predScore*_mam241.noMissingData.threshold.independent.ML.?.Log.txt h*G*_mam241.noMissingData.threshold.independent.ML.?.Log.txt h*_unobstructed_hz_mam241.noMissingData.threshold.independent.ML.?.Log.txt | while read file; do
-#ls *_circular_*noMissingData.independent.ML.?.Log.txt *_subcircular_*noMissingData.independent.ML.?.Log.txt *_horizontal_*noMissingData.independent.ML.?.Log.txt *_vertical_*noMissingData.independent.ML.?.Log.txt *_u-shape_*noMissingData.independent.ML.?.Log.txt | while read file; do
 	#file_start=$(echo "${file}" | cut -d "." -f 1)
 	file_start=$(echo "${file}" | rev | cut -d "." -f 7- | rev)
 	#samp=$(echo "${file}" | cut -d "_" -f 1-2)
