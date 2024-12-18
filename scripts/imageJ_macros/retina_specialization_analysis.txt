@@ -22,7 +22,7 @@ roiManager("Rename", "retina_circle");
 roiManager("Select", 1);
 roiManager("Rename", "specialization_peak");
 
-// Get the center point of all ROIs, which should be the center of the retina and the peak area of the retinal specialization
+// Get the center point of all ROIs, which should be the center of the retina, and the peak area of the retinal specialization
 run("Set Measurements...", "centroid redirect=None decimal=1");
 runMacro("GetAllRoiCentroids.txt")
 
